@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NEON JARVIS AI — Project Technical Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    :root {
+      --primary: #581c87;
+      --primary-dark: #3b0764;
+      --primary-light: #7e22ce;
+      --primary-subtle: #f3e8ff;
+      --primary-border: #d8b4fe;
+      --accent: #9333ea;
+      --text-main: #1e1b4b;
+      --text-muted: #4c1d95;
+      --text-light: #6b7280;
+      --bg-light: #faf5ff;
+      --card-bg: #ffffff;
+      --border-color: #e9d5ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text-main);
+      background-color: #ffffff;
+      line-height: 1.65;
+      font-size: 11pt;
+    }
+
+    @page {
+      size: A4;
+      margin: 20mm 18mm 20mm 18mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 9pt;
+        color: #7e22ce;
+      }
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 48px;
+      background: #ffffff;
+    }
+
+    .page-break {
+      page-break-before: always;
+      margin-top: 40px;
+    }
+
+    /* Cover Page */
+    .cover {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid var(--primary-border);
+      padding: 60px 48px;
+      background: linear-gradient(135deg, #ffffff 0%, #faf5ff 60%, #f3e8ff 100%);
+      position: relative;
+      border-radius: 8px;
+    }
+
+    .cover-top {
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 24px;
+    }
+
+    .inst-name {
+      font-family: 'Cinzel', serif;
+      font-size: 14pt;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+    }
+
+    .dept-name {
+      font-size: 10pt;
+      color: var(--primary-light);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .cover-mid {
+      margin: 40px 0;
+    }
+
+    .project-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background-color: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      font-weight: 600;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .project-title {
+      font-family: 'Cinzel', serif;
+      font-size: 32pt;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.15;
+      margin-bottom: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .project-subtitle {
+      font-size: 13pt;
+      color: var(--primary-light);
+      font-weight: 500;
+      line-height: 1.5;
+      max-width: 650px;
+    }
+
+    .cover-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      border-top: 1px solid var(--primary-border);
+      padding-top: 28px;
+    }
+
+    .meta-box h4 {
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary-light);
+      margin-bottom: 6px;
+    }
+
+    .meta-box p {
+      font-size: 11pt;
+      font-weight: 600;
+      color: var(--primary-dark);
+      line-height: 1.4;
+    }
+
+    .meta-box .sub-val {
+      font-size: 9.5pt;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* Typography & Content Sections */
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 18pt;
+      font-weight: 700;
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--primary-border);
+      padding-bottom: 8px;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 .sec-num {
+      color: var(--primary-light);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14pt;
+    }
+
+    h3 {
+      font-size: 12.5pt;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin-bottom: 12px;
+      text-align: justify;
+      color: #2e1065;
+    }
+
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
+      color: #2e1065;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    /* Cards & Callouts */
+    .card {
+      background: var(--bg-light);
+      border: 1px solid var(--primary-border);
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin: 18px 0;
+    }
+
+    .card h4 {
+      font-size: 10.5pt;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 9.5pt;
+    }
+
+    th {
+      background-color: var(--primary);
+      color: #ffffff;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-color);
+      color: #2e1065;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--bg-light);
+    }
+
+    /* Code Blocks */
+    pre, code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+    }
+
+    code {
+      background-color: var(--primary-subtle);
+      color: var(--primary-dark);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--primary-border);
+    }
+
+    pre {
+      background-color: #1e1b4b;
+      color: #f3e8ff;
+      padding: 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 16px 0;
+      border: 1px solid #4c1d95;
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+      border: none;
+    }
+
+    /* Links */
+    a {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .toc {
+      background: var(--bg-light);
+      border: 1px solid var(--primary-border);
+      padding: 20px 28px;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 10.5pt;
+      border-bottom: 1px dotted var(--primary-border);
+      padding-bottom: 4px;
+    }
+
+    .toc-item span:first-child {
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .toc-item span:last-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <!-- COVER PAGE -->
+    <div class="cover">
+      <div class="cover-top">
+        <div class="inst-name">Superior University, Lahore</div>
+        <div class="dept-name">Faculty of Computer Science &amp; Information Technology</div>
+      </div>
+
+      <div class="cover-mid">
+        <div class="project-badge">Course Project • Generative Artificial Intelligence (BSAI 5th Sem)</div>
+        <h1 class="project-title">NEON JARVIS AI</h1>
+        <p class="project-subtitle">
+          An Autonomous Holographic Personal AI Operating System Featuring Multilingual Voice Interaction (Urdu, English, Punjabi), Grok-2 LLM Integration, Real-Time Web Intelligence, and YouTube Voice Control.
+        </p>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="meta-box">
+          <h4>Submitted By</h4>
+          <p>Muhammad Maheem</p>
+          <div class="sub-val">Roll Number: <strong>SU92-BSAIM-F24-054</strong></div>
+          <div class="sub-val">Program: BS Artificial Intelligence (BSAI-4A)</div>
+        </div>
+
+        <div class="meta-box">
+          <h4>Course &amp; Repository Details</h4>
+          <p>Generative AI — 5th Semester</p>
+          <div class="sub-val">Submission Date: November 2026</div>
+          <div class="sub-val">GitHub: <a href="https://github.com/MuhammadMaheem/neon-jarvis-ai">github.com/MuhammadMaheem/neon-jarvis-ai</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="page-break"></div>
+
+    <h2><span class="sec-num">00</span> Table of Contents</h2>
+    <div class="toc">
+      <div class="toc-item"><span>1. Executive Summary &amp; Project Abstract</span> <span>Pg. 03</span></div>
+      <div class="toc-item"><span>2. Problem Statement &amp; Motivation</span> <span>Pg. 03</span></div>
+      <div class="toc-item"><span>3. Architectural Blueprint &amp; Tech Stack</span> <span>Pg. 04</span></div>
+      <div class="toc-item"><span>4. Multilingual Speech Pipeline (Urdu, English, Punjabi)</span> <span>Pg. 05</span></div>
+      <div class="toc-item"><span>5. Voice Directive Engine &amp; Instant Stop Directives</span> <span>Pg. 06</span></div>
+      <div class="toc-item"><span>6. Holographic AI Face &amp; Sci-Fi Visual Synthesis</span> <span>Pg. 07</span></div>
+      <div class="toc-item"><span>7. YouTube Media Subsystem &amp; Autonomous Fallbacks</span> <span>Pg. 08</span></div>
+      <div class="toc-item"><span>8. Verification, Build Metrics &amp; Delivery</span> <span>Pg. 09</span></div>
+    </div>
+
+    <!-- SECTION 1 & 2 -->
+    <h2><span class="sec-num">01</span> Executive Summary &amp; Abstract</h2>
+    <p>
+      <strong>NEON JARVIS AI</strong> is a full-featured, futuristic web-based personal AI assistant and personal operating system inspired by Iron Man's iconic J.A.R.V.I.S. companion. Engineered on Next.js 15 App Router, TypeScript, and TailwindCSS, the application synthesizes high-fidelity voice computing, multilingual intelligence (English, Urdu, and Pakistani Punjabi), real-time web querying, and autonomous media control within a cinematic, sci-fi holographic user interface.
+    </p>
+    <p>
+      Unlike conventional single-turn conversational chatbots that produce generic text streams, NEON JARVIS operates as an active desktop companion. It continuously listens for wake words (<em>"Jarvis"</em>, <em>"Assistant"</em>), displays an audio-reactive cybernetic robotic AI face across four emotional states, and instantly executes complex real-world voice tasks such as querying live global weather, fetching real-time web intelligence, and streaming YouTube videos while responding to immediate cessation commands across regional languages (<em>"Stop"</em>, <em>"Ruk jao"</em>, <em>"Bus karo"</em>, <em>"Band karo"</em>).
+    </p>
+
+    <h2><span class="sec-num">02</span> Problem Statement &amp; Motivation</h2>
+    <p>
+      Most commercial AI conversational interfaces suffer from three systemic constraints:
+    </p>
+    <ul>
+      <li><strong>Monolingual &amp; Standardized Bias:</strong> Existing systems cater predominantly to standard English, failing to recognize regional colloquial dialects such as Roman Urdu and Pakistani Punjabi naturally mixed in daily speech.</li>
+      <li><strong>Passive Text-Only Modality:</strong> Standard chatbots lack physical or animated presence, failing to communicate state transitions (listening, computing, verbalizing) intuitively.</li>
+      <li><strong>Action Isolation:</strong> Conventional LLM chatbots generate theoretical advice rather than directly controlling client-side actuators (such as opening, seeking, and halting media streams).</li>
+    </ul>
+    <p>
+      NEON JARVIS resolves these limitations by creating a tight integration between natural language understanding, real-time API routes, Web Speech / Web Audio APIs, and an expressive visual AI core.
+    </p>
+
+    <!-- SECTION 3: ARCHITECTURE -->
+    <div class="page-break"></div>
+    <h2><span class="sec-num">03</span> Architectural Blueprint &amp; Tech Stack</h2>
+    <p>
+      The architecture follows a modular, edge-compatible Next.js 15 design structured into clean decoupled layers: presentation components, state management, orchestration services, and resilient API handlers.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Framework</strong></td>
+          <td>Next.js 15 (App Router)</td>
+          <td>Server-side rendering, production bundling, optimized asset loading.</td>
+        </tr>
+        <tr>
+          <td><strong>Language</strong></td>
+          <td>TypeScript 5.7</td>
+          <td>Strict interface contracts for telemetry, intents, chat, and media models.</td>
+        </tr>
+        <tr>
+          <td><strong>Styling &amp; FX</strong></td>
+          <td>TailwindCSS + Framer Motion</td>
+          <td>Custom neon color tokens, glassmorphism, scanlines, particle physics.</td>
+        </tr>
+        <tr>
+          <td><strong>State Core</strong></td>
+          <td>Zustand (Store)</td>
+          <td>Global reactive state with localStorage persistence for user settings.</td>
+        </tr>
+        <tr>
+          <td><strong>Primary LLM</strong></td>
+          <td>Grok-2 API (xAI)</td>
+          <td>High-reasoning conversational intelligence with multilingual system prompt.</td>
+        </tr>
+        <tr>
+          <td><strong>Speech Synthesis</strong></td>
+          <td>ElevenLabs + Web Speech</td>
+          <td>Multilingual neural audio stream with browser TTS automatic fallback.</td>
+        </tr>
+        <tr>
+          <td><strong>Web Audio Engine</strong></td>
+          <td>Web Audio API</td>
+          <td>Zero-dependency procedural sound generator (wake chime, reactor hum).</td>
+        </tr>
+        <tr>
+          <td><strong>Media Engine</strong></td>
+          <td>YouTube Subsystem</td>
+          <td>Embedded player with autonomous scraping resolver and voice control.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card">
+      <h4>System Reliability Principle: The Autonomous Fallback Engine</h4>
+      <p>
+        A core requirement of this project was resilience. If external API keys (Grok, ElevenLabs, Google Search) are missing or rate-limited, NEON JARVIS seamlessly switches to local neural heuristics: the DuckDuckGo live intelligence engine, Open-Meteo live weather, native Web Speech synthesis, and YouTube search scrapers. The platform is guaranteed to operate smoothly out-of-the-box.
+      </p>
+    </div>
+
+    <!-- SECTION 4: MULTILINGUAL PIPELINE -->
+    <h2><span class="sec-num">04</span> Multilingual Speech &amp; Purity Pipeline</h2>
+    <p>
+      NEON JARVIS handles code-switching between English, Urdu, and Pakistani Punjabi. The system uses a specialized intent parser that extracts linguistic markers and maps the user's intent:
+    </p>
+    <ul>
+      <li><strong>Punjabi Detection:</strong> Identifies phonetic tokens such as <em>"vich"</em>, <em>"kivein"</em>, <em>"ki haal"</em>, <em>"tussi"</em>, <em>"gal karo"</em>, <em>"changa"</em>, <em>"dasso"</em>, and responds in warm, witty Punjabi.</li>
+      <li><strong>Urdu Detection:</strong> Matches vocabulary like <em>"kaise ho"</em>, <em>"kya chal raha hai"</em>, <em>"mausam"</em>, <em>"batao"</em>, <em>"shukriya"</em>, and replies respectfully with polite Pakistani assistant phrasing (<em>"Jee Janab, hukum karein"</em>).</li>
+      <li><strong>English Detection:</strong> Replies in classic British/crisp Jarvis persona (<em>"Right away, Sir"</em>, <em>"All systems operational"</em>).</li>
+    </ul>
+
+    <div class="card">
+      <h4>Speech Purity Standard (Elimination of Markdown &amp; URL Artifacts)</h4>
+      <p>
+        A common pitfall of LLM voice agents is pronouncing raw URLs, formatting asterisks, and hash symbols (e.g. reading out <em>"asterisk asterisk bold asterisk asterisk"</em> or <em>"h-t-t-p-s colon slash slash"</em>). NEON JARVIS implements a strict sanitizer:
+      </p>
+      <pre><code>// utils/cleanSpeechText.ts
+export function cleanSpeechText(text: string): string {
+  return text
+    .replace(/```[\s\S]*?```/g, "")      // Code blocks
+    .replace(/`([^`]+)`/g, "$1")         // Inline code
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Markdown links
+    .replace(/https?:\/\/\S+/gi, "")     // Raw URLs
+    .replace(/^#+\s+/gm, "")             // Headers
+    .replace(/[*_~]{1,3}/g, "")          // Bold / Italics
+    .replace(/\s{2,}/g, " ")             // Extra spaces
+    .trim();
+}</code></pre>
+    </div>
+
+    <!-- SECTION 5: VOICE DIRECTIVES & STOP COMMANDS -->
+    <div class="page-break"></div>
+    <h2><span class="sec-num">05</span> Voice Directive Engine &amp; Instant Stop Directives</h2>
+    <p>
+      The voice pipeline allows immediate hands-free interaction. When the user speaks, speech recognition matches patterns to actionable commands:
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Directive Type</th>
+          <th>Voice Triggers</th>
+          <th>Automated Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Media Playback</strong></td>
+          <td><em>"Play [song/naat/artist]"</em>, <em>"Coke Studio chalao"</em>, <em>"Atif Aslam ke gane sunao"</em></td>
+          <td>Extracts query, queries YouTube resolver, launches HUD player with autoplay.</td>
+        </tr>
+        <tr>
+          <td><strong>Instant Cessation</strong></td>
+          <td><em>"Stop"</em>, <em>"Ruk jao"</em>, <em>"Bus karo"</em>, <em>"Band karo"</em>, <em>"Roko"</em></td>
+          <td>Halts YouTube iframe immediately, cancels active speech synthesis, sounds stop chirp.</td>
+        </tr>
+        <tr>
+          <td><strong>Live Weather</strong></td>
+          <td><em>"Kal ka weather batao"</em>, <em>"Lahore weather report"</em></td>
+          <td>Queries Open-Meteo geocoding &amp; forecast API, displays weather card, speaks temperature in °C.</td>
+        </tr>
+        <tr>
+          <td><strong>Real-Time Search</strong></td>
+          <td><em>"Search latest AI news"</em>, <em>"Dhoondo SpaceX"</em></td>
+          <td>Queries live web engine, summarizes top hits, speaks natural synopsis without URLs.</td>
+        </tr>
+        <tr>
+          <td><strong>Temporal Status</strong></td>
+          <td><em>"Kya waqt hua hai"</em>, <em>"What time is it"</em></td>
+          <td>Announces current local time and date in the matching language.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECTION 6: HOLOGRAPHIC AI FACE -->
+    <h2><span class="sec-num">06</span> Holographic AI Face &amp; Sci-Fi Visual Synthesis</h2>
+    <p>
+      The visual centerpiece of NEON JARVIS is an animated robotic AI face engineered entirely with vector SVG, TailwindCSS, and Framer Motion:
+    </p>
+    <ul>
+      <li><strong>Audio-Reactive Optics:</strong> Dual cybernetic eyes that dilate and glow with variable intensity proportional to microphone input and vocal output.</li>
+      <li><strong>Oscillating Mouth Soundwave:</strong> Nine digital equalizer columns representing acoustic spectrum distribution across the lower jaw plate.</li>
+      <li><strong>Bi-Directional Gyroscope:</strong> Concentric circular reticles with degree ticks rotating continuously to evoke an Arc Reactor telemetry system.</li>
+      <li><strong>Procedural Particle Mesh:</strong> Interactive HTML5 canvas rendering floating cyan/purple nodes that dynamically link with laser filaments when in proximity.</li>
+    </ul>
+
+    <!-- SECTION 7: VERIFICATION & DELIVERY -->
+    <div class="page-break"></div>
+    <h2><span class="sec-num">07</span> Verification, Build Metrics &amp; Delivery</h2>
+    <p>
+      The project was validated via a clean production build (`next build`) and end-to-end API route testing via HTTP protocols:
+    </p>
+
+    <div class="card">
+      <h4>Production Compilation Verification</h4>
+      <pre><code>✓ Compiled successfully in 10.9s
+✓ Linting and checking validity of types
+✓ Collecting page data
+✓ Generating static pages (9/9)
+✓ Finalizing page optimization
+
+Route (app)                                 Size     First Load JS
+┌ ○ /                                       63 kB    165 kB
+├ ƒ /api/chat                               136 B    102 kB
+├ ƒ /api/search                             136 B    102 kB
+├ ƒ /api/tts                                136 B    102 kB
+├ ƒ /api/weather                            136 B    102 kB
+└ ƒ /api/youtube                            136 B    102 kB</code></pre>
+    </div>
+
+    <h2><span class="sec-num">08</span> Conclusion &amp; Repository Submission</h2>
+    <p>
+      NEON JARVIS AI demonstrates the synthesis of modern web technologies, Generative AI models, and natural human-computer interaction. By uniting multilingual fluency, real-time tools, immediate voice cessation controls, and a sci-fi user experience, it establishes a benchmark for next-generation personal AI systems.
+    </p>
+
+    <div class="card">
+      <h4>Academic Submission Manifest</h4>
+      <ul>
+        <li><strong>Student Name:</strong> Muhammad Maheem</li>
+        <li><strong>Roll Number:</strong> SU92-BSAIM-F24-054</li>
+        <li><strong>Degree &amp; Section:</strong> BSAI, 5th Semester (BSAI-4A)</li>
+        <li><strong>Institution:</strong> Superior University, Lahore</li>
+        <li><strong>GitHub Repository:</strong> <a href="https://github.com/MuhammadMaheem/neon-jarvis-ai">https://github.com/MuhammadMaheem/neon-jarvis-ai</a></li>
+        <li><strong>Local Document Report:</strong> <code>~/Documents/NEON_JARVIS_PROJECT_REPORT.pdf</code></li>
+        <li><strong>Submission Zip Archive:</strong> <code>~/Documents/NEON_JARVIS_AI_SUBMISSION.zip</code></li>
+      </ul>
+    </div>
+
+  </div>
+
+</body>
+</html>
