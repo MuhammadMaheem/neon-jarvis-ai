@@ -3,7 +3,7 @@
 **Institution:** Superior University, Lahore — Faculty of Computer Science & Information Technology  
 **Student Name:** Muhammad Maheem  
 **Roll Number:** `SU92-BSAIM-F24-054`  
-**Section:** BSAI-4A  
+**Section:** BSAI-5A  
 **Submission Date:** November 2026  
 **GitHub Repository:** [https://github.com/MuhammadMaheem/neon-jarvis-ai](https://github.com/MuhammadMaheem/neon-jarvis-ai)  
 
@@ -96,6 +96,6 @@ The application compiles cleanly with zero TypeScript or linting errors:
 ## 8. Academic Manifest
 - **Candidate:** Muhammad Maheem
 - **ID / Roll No:** `SU92-BSAIM-F24-054`
-- **Class / Section:** BSAI-4A (5th Semester)
+- **Class / Section:** BSAI-5A (5th Semester)
 - **Course:** Generative Artificial Intelligence
 - **Faculty:** Faculty of Computer Science & Information Technology, Superior University, Lahore
