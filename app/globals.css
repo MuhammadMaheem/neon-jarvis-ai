@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-orbitron: "Orbitron", monospace, sans-serif;
+  --font-rajdhani: "Rajdhani", sans-serif;
+}
+
+/* Custom futuristic scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(3, 7, 18, 0.9);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.8);
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+/* Base Body */
+body {
+  background-color: #030712;
+  color: #e2e8f0;
+  overflow-x: hidden;
+  user-select: none;
+  font-family: var(--font-rajdhani), system-ui, -apple-system, sans-serif;
+}
+
+/* Glassmorphism Sci-Fi Panels */
+.hud-glass {
+  background: rgba(6, 18, 36, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.hud-glass:hover {
+  border-color: rgba(0, 240, 255, 0.45);
+}
+
+/* Text glow utilities */
+.glow-text-cyan {
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6), 0 0 16px rgba(0, 240, 255, 0.3);
+}
+
+.glow-text-emerald {
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.6), 0 0 16px rgba(0, 255, 136, 0.3);
+}
+
+.glow-text-amber {
+  text-shadow: 0 0 8px rgba(255, 184, 0, 0.6), 0 0 16px rgba(255, 184, 0, 0.3);
+}
